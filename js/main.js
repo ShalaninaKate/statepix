@@ -16449,6 +16449,88 @@ function sliderPlugin() {
   }
 }
 sliderPlugin();
+
+// document.addEventListener("DOMContentLoaded", () => {
+//   const steps = document.querySelectorAll('.howitworks__item');
+
+//   if (steps.length > 0) {
+//     const observerOptions = {
+//       root: null, // Используем окно просмотра как корневой элемент
+//       rootMargin: '0px',
+//       threshold: 1 // Элемент считается видимым, если 10% его площади находится в зоне просмотра
+//     };
+
+//     const observerCallback = (entries, observer) => {
+//       entries.forEach(entry => {
+//         if (entry.isIntersecting) {
+//           // Начинаем выполнять ваш код, когда первый элемент становится видимым
+//           steps[0].classList.add('active');
+
+//           let i = 1;
+
+//           const intervalId = setInterval(() => {
+//             if (i < steps.length) {
+//               steps[i].classList.add('active');
+//               i++;
+//             } else {
+//               clearInterval(intervalId);
+//             }
+//           }, 800);
+
+//           // Останавливаем наблюдатель после начала анимации
+//           observer.unobserve(entry.target);
+//         }
+//       });
+//     };
+
+//     const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+//     // Наблюдаем за первым элементом
+//     observer.observe(steps[0]);
+//   }
+// });
+// document.addEventListener("DOMContentLoaded", () => {
+//   const steps = document.querySelectorAll('.howitworks__item');
+
+//   if (steps.length > 0) {
+//     const observerOptions = {
+//       root: null, // Используем окно просмотра как корневой элемент
+//       rootMargin: '0px',
+//       threshold: 1 // Элемент считается видимым, если 100% его площади находится в зоне просмотра
+//     };
+
+//     const observerCallback = (entries, observer) => {
+//       entries.forEach(entry => {
+//         if (entry.isIntersecting) {
+//           // Начинаем выполнять ваш код, когда первый элемент становится видимым
+//           steps[0].classList.add('active');
+
+//           let i = 1;
+
+//           const intervalId = setInterval(() => {
+//             if (i < steps.length) {
+//               steps[i - 1].classList.remove('active'); // Убираем класс у предыдущего элемента
+//               steps[i].classList.add('active'); // Добавляем класс текущему элементу
+//               i++;
+//             } else {
+//               steps[i - 1].classList.remove('active'); // Убираем класс у последнего элемента после завершения
+//               clearInterval(intervalId);
+//             }
+//           }, 800);
+
+//           // Останавливаем наблюдатель после начала анимации
+//           observer.unobserve(entry.target);
+//         }
+//       });
+//     };
+
+//     const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+//     // Наблюдаем за первым элементом
+//     observer.observe(steps[0]);
+//   }
+// });
+
 document.addEventListener("DOMContentLoaded", () => {
   const steps = document.querySelectorAll('.howitworks__item');
   if (steps.length > 0) {
@@ -16456,21 +16538,17 @@ document.addEventListener("DOMContentLoaded", () => {
       root: null,
       // Используем окно просмотра как корневой элемент
       rootMargin: '0px',
-      threshold: 1 // Элемент считается видимым, если 10% его площади находится в зоне просмотра
+      threshold: 1 // Элемент считается видимым, если 100% его площади находится в зоне просмотра
     };
     const observerCallback = (entries, observer) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          // Начинаем выполнять ваш код, когда первый элемент становится видимым
           steps[0].classList.add('active');
           let i = 1;
           const intervalId = setInterval(() => {
-            if (i < steps.length) {
-              steps[i].classList.add('active');
-              i++;
-            } else {
-              clearInterval(intervalId);
-            }
+            steps[(i - 1) % steps.length].classList.remove('active'); // Убираем класс у предыдущего элемента
+            steps[i % steps.length].classList.add('active'); // Добавляем класс текущему элементу
+            i++;
           }, 800);
 
           // Останавливаем наблюдатель после начала анимации

@@ -4483,7 +4483,7 @@ select:focus-visible + .select__item {
 .howitworks__item.active .howitworks__image {
   width: 6.25rem;
   height: 6.25rem;
-  background: linear-gradient(10deg, #df87f1 0%, #219f70 100%);
+  background: linear-gradient(25deg, #df87f1 0%, #219f70 100%);
 }
 @media (max-width: 48em) {
   .howitworks__item.active .howitworks__image {
