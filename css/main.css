@@ -2152,7 +2152,7 @@ select:focus-visible + .select__item {
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
-    row-gap: 1.5625rem;
+    row-gap: 1.125rem;
   }
 }
 .menu__item {
@@ -3431,11 +3431,25 @@ select:focus-visible + .select__item {
   font-size: 2rem;
   line-height: 110%;
   color: var(--white);
+  -webkit-transform: translate(0px, 1.875rem);
+  -ms-transform: translate(0px, 1.875rem);
+  transform: translate(0px, 1.875rem);
+  opacity: 0;
+  -webkit-transition: opacity 1.4s ease, -webkit-transform 1.4s ease;
+  transition: opacity 1.4s ease, -webkit-transform 1.4s ease;
+  transition: transform 1.4s ease, opacity 1.4s ease;
+  transition: transform 1.4s ease, opacity 1.4s ease, -webkit-transform 1.4s ease;
 }
 @media (max-width: 48em) {
   .register__title {
     font-size: 1.75rem;
   }
+}
+.register__title.loaded {
+  -webkit-transform: translate(0px, 0);
+  -ms-transform: translate(0px, 0);
+  transform: translate(0px, 0);
+  opacity: 1;
 }
 .register__btn {
   width: 13.75rem;
