@@ -16411,10 +16411,6 @@ var __webpack_exports__ = {};
   !*** ./src/js/main.js ***!
   \************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   gotoBlock: () => (/* binding */ gotoBlock),
-/* harmony export */   pageNavigation: () => (/* binding */ pageNavigation)
-/* harmony export */ });
 /* harmony import */ var _components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./_components */ "./src/js/_components.js");
 
 window.onload = function () {
@@ -16438,23 +16434,6 @@ function _removeClasses(el, class_name) {
     el[i].classList.remove(class_name);
   }
 }
-
-// function menuInit() {
-//   if (document.querySelector(".icon-menu")) {
-//     document.addEventListener("click", function (e) {
-//       if (e.target.closest('.icon-menu')) {
-//         document.documentElement.classList.toggle("lock");
-//         document.documentElement.classList.toggle("menu-open");
-//       }
-//       if (e.target.closest('.nav__link') && document.documentElement.classList.contains("lock")) {
-//         document.documentElement.classList.remove("lock");
-//         document.documentElement.classList.remove("menu-open");
-//       }
-//     });
-//   };
-// }
-// menuInit()
-
 function sliderPlugin() {
   let activeSlide = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
   const slides = document.querySelectorAll('.item-products');
@@ -16470,69 +16449,41 @@ function sliderPlugin() {
   }
 }
 sliderPlugin();
-function pageNavigation() {
-  document.addEventListener("click", pageNavigationAction);
-  document.addEventListener("watcherCallback", pageNavigationAction);
-  function pageNavigationAction(e) {
-    if (e.type === "click") {
-      const targetElement = e.target;
-      if (targetElement.closest('[data-goto]')) {
-        const gotoLink = targetElement.closest('[data-goto]');
-        const gotoLinkSelector = gotoLink.dataset.goto ? gotoLink.dataset.goto : '';
-        const noHeader = gotoLink.hasAttribute('data-goto-header') ? true : false;
-        const gotoSpeed = gotoLink.dataset.gotoSpeed ? gotoLink.dataset.gotoSpeed : 500;
-        const offsetTop = gotoLink.dataset.gotoTop ? parseInt(gotoLink.dataset.gotoTop) : 0;
-        gotoBlock(gotoLinkSelector, noHeader, gotoSpeed, offsetTop);
-        e.preventDefault();
-      }
-    }
-  }
-}
-let gotoBlock = function (targetBlock) {
-  let noHeader = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-  let speed = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 500;
-  let offsetTop = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
-  const targetBlockElement = document.querySelector(targetBlock);
-  if (targetBlockElement) {
-    let headerItem = '';
-    let headerItemHeight = 0;
-    if (noHeader) {
-      headerItem = 'header.header';
-      const headerElement = document.querySelector(headerItem);
-      if (!headerElement.classList.contains('_header-scroll')) {
-        headerElement.style.cssText = `transition-duration: 0s;`;
-        headerElement.classList.add('_header-scroll');
-        headerItemHeight = headerElement.offsetHeight;
-        headerElement.classList.remove('_header-scroll');
-        setTimeout(() => {
-          headerElement.style.cssText = ``;
-        }, 0);
-      } else {
-        headerItemHeight = headerElement.offsetHeight;
-      }
-    }
-    let options = {
-      speedAsDuration: true,
-      speed: speed,
-      header: headerItem,
-      offset: offsetTop,
-      easing: 'easeOutQuad'
+document.addEventListener("DOMContentLoaded", () => {
+  const steps = document.querySelectorAll('.howitworks__item');
+  if (steps.length > 0) {
+    const observerOptions = {
+      root: null,
+      // Используем окно просмотра как корневой элемент
+      rootMargin: '0px',
+      threshold: 1 // Элемент считается видимым, если 10% его площади находится в зоне просмотра
     };
-    document.documentElement.classList.contains("menu-open") ? menuClose() : null;
-    if (typeof SmoothScroll !== 'undefined') {
-      new SmoothScroll().animateScroll(targetBlockElement, '', options);
-    } else {
-      let targetBlockElementPosition = targetBlockElement.getBoundingClientRect().top + scrollY;
-      targetBlockElementPosition = headerItemHeight ? targetBlockElementPosition - headerItemHeight : targetBlockElementPosition;
-      targetBlockElementPosition = offsetTop ? targetBlockElementPosition - offsetTop : targetBlockElementPosition;
-      window.scrollTo({
-        top: targetBlockElementPosition,
-        behavior: "smooth"
+    const observerCallback = (entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Начинаем выполнять ваш код, когда первый элемент становится видимым
+          steps[0].classList.add('active');
+          let i = 1;
+          const intervalId = setInterval(() => {
+            if (i < steps.length) {
+              steps[i].classList.add('active');
+              i++;
+            } else {
+              clearInterval(intervalId);
+            }
+          }, 800);
+
+          // Останавливаем наблюдатель после начала анимации
+          observer.unobserve(entry.target);
+        }
       });
-    }
+    };
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    // Наблюдаем за первым элементом
+    observer.observe(steps[0]);
   }
-};
-pageNavigation();
+});
 })();
 
 /******/ })()
