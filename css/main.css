@@ -4486,30 +4486,6 @@ select:focus-visible + .select__item {
 .howitworks__item.active .howitworks__item-title {
   opacity: 1;
 }
-@media (any-hover: hover) {
-  .howitworks__item:hover .howitworks__image {
-    width: 6.25rem;
-    height: 6.25rem;
-    background: linear-gradient(10deg, #df87f1 0%, #219f70 100%);
-  }
-}
-@media (any-hover: hover) and (max-width: 48em) {
-  .howitworks__item:hover .howitworks__image {
-    width: 5rem;
-    height: 5rem;
-  }
-}
-@media (any-hover: hover) {
-  .howitworks__item:hover .howitworks__image-icon {
-    fill: #fff;
-  }
-  .howitworks__item:hover .howitworks__item-title {
-    opacity: 1;
-  }
-  .howitworks__item:hover .howitworks__item-text {
-    opacity: 1;
-  }
-}
 .howitworks__image {
   position: relative;
   margin-bottom: 1.5rem;
