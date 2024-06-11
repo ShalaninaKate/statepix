@@ -509,18 +509,20 @@ document.addEventListener("click", documentActions);
 function documentActions(e) {
   const targetElement = e.target;
   if (targetElement.classList.contains('menu__link--btn')) {
-    targetElement.closest('.menu__item').classList.toggle('active');
-  }
-  if (!targetElement.closest('.menu__item') && document.querySelectorAll('.menu__item.active').length > 0) {
+    if (targetElement.closest('.menu__item').classList.contains('active')) {
+      targetElement.closest('.menu__item').classList.remove('active');
+    } else {
+      _removeClasses(document.querySelectorAll('.menu__item.active'), 'active');
+      targetElement.closest('.menu__item').classList.add('active');
+    }
+  } else if (!targetElement.closest('.menu__item') && document.querySelectorAll('.menu__item.active').length > 0) {
     _removeClasses(document.querySelectorAll('.menu__item.active'), "active");
   }
 }
-
-//RemoveClasses
-function _removeClasses(el, class_name) {
-  for (var i = 0; i < el.length; i++) {
-    el[i].classList.remove(class_name);
-  }
+function _removeClasses(elements, className) {
+  elements.forEach(el => {
+    el.classList.remove(className);
+  });
 }
 function slider() {
   let activeSlide = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
@@ -574,4 +576,3 @@ if (steps.length > 0) {
 
 /******/ })()
 ;
-//# sourceMappingURL=main.js.map
