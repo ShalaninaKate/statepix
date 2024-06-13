@@ -524,14 +524,55 @@ function _removeClasses(elements, className) {
     el.classList.remove(className);
   });
 }
+
+// function slider(activeSlide = 0) {
+
+//   const slides = document.querySelectorAll('.item-products')
+
+//   slides[activeSlide].classList.add('active')
+
+//   slides.forEach(slide => {
+//     slide.addEventListener('mouseover', () => {
+//       removeClass()
+//       slide.classList.add('active')
+//     })
+
+//     slide.addEventListener('mouseout', () => {
+//       slide.classList.remove('active')
+//     })
+//   })
+
+//   function removeClass() {
+//     slides.forEach(slide => slide.classList.remove('active'))
+//   }
+
+// }
+
+// slider()
+
 function slider() {
   let activeSlide = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
   const slides = document.querySelectorAll('.item-products');
+
+  // Устанавливаем первый слайд активным при первоначальной загрузке
   slides[activeSlide].classList.add('active');
+
+  // Переменная для хранения последнего активного слайда
+  let lastActiveSlide = slides[activeSlide];
   slides.forEach(slide => {
-    slide.addEventListener('click', () => {
+    slide.addEventListener('mouseover', () => {
+      // Удаляем класс active со всех слайдов
       removeClass();
+      // Добавляем класс active текущему слайду
       slide.classList.add('active');
+    });
+    slide.addEventListener('mouseout', () => {
+      // Сохраняем последний активный слайд
+      lastActiveSlide = slide;
+      // Удаляем класс active с текущего слайда
+      slide.classList.remove('active');
+      // Возвращаем класс active последнему активному слайду
+      lastActiveSlide.classList.add('active');
     });
   });
   function removeClass() {
